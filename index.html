@@ -223,7 +223,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-02-19 17:32:49 / Modified: 17:33:35" itemprop="dateCreated datePublished" datetime="2021-02-19T17:32:49+08:00">2021-02-19</time>
+      <time title="Created: 2021-02-19 17:32:49 / Modified: 17:37:12" itemprop="dateCreated datePublished" datetime="2021-02-19T17:32:49+08:00">2021-02-19</time>
     </span>
 
   
@@ -236,30 +236,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="摘要-简明扼要介绍下行式、列式存储"><a href="#摘要-简明扼要介绍下行式、列式存储" class="headerlink" title="[摘要]简明扼要介绍下行式、列式存储"></a>[摘要]简明扼要介绍下行式、列式存储</h1><blockquote>
-<p>作者：Tianny<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/29380943/answer/375294683">https://www.zhihu.com/question/29380943/answer/375294683</a><br>来源：知乎</p>
-</blockquote>
-<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><ul>
-<li>行式存储把一行中的数据值串在一起存储起来，然后再存储下一行的数据，以此类推</li>
-<li>列式存储把一列中的数据值串在一起存储起来，然后再存储下一列的数据，以此类推</li>
-</ul>
-<h3 id="举例1"><a href="#举例1" class="headerlink" title="举例1"></a>举例1</h3><p>数据库以行、列的二维表的形式表示数据，但是却以一维字符串的方式存储<br><img src="https://cdn.nlark.com/lark/0/2018/png/16292/1536026514076-1d7d4c27-1fd3-40a9-857a-abaabb14043b.png" alt="undefined"> </p>
-<p>上面的表包括 Empid，Lastname、Firstname，Salary 四个字段。数据库会把这个表存储在一系列的一维字节中，由操作系统将这一系列的字节写到磁盘中。行式数据库把一行中的数据串在一起存储起来，然后再存储下一行的数据，以此类推，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1,Smith,Joe,40000;2,Jones,Mary,50000;3,Johnson,Cathy,44000;</span><br></pre></td></tr></table></figure>
-<p>列式数据库把一列中的数据串在一起存储起来，然后再存储下一列的数据，依次类推，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1,2,3;Smith,Jones,Johnson;Joe,Mary,Cathy;40000,50000,44000;</span><br></pre></td></tr></table></figure>
-<h3 id="举例2"><a href="#举例2" class="headerlink" title="举例2"></a>举例2</h3><p>在行式数据库中，每一行数据都看做一个整体，可以被认为是一小块数据，这样每一块数据都是紧挨着另一块数据存放在硬盘中。一般情况下，可以认为每一行存储的数据就是硬盘中的一组连续的字节。</p>
-<p>为了方便讨论，有如下表，假设每一行都包含一个用户的信息，每个用户的所有属性都整块的存储在硬盘上<br><img src="https://cdn.nlark.com/lark/0/2018/png/16292/1536026647188-7ed56119-069d-448f-b0c4-1808d8fa5afa.png" alt="undefined"> </p>
-<p>在硬盘上，大量的页面用来存储所有的数据。现在假设数据库中的每行信息都存储在同一页上，也就是说，每一页只能保存一个用户的所有信息。在上面的例子中，Alice 的所有信息都被存储到一个页面中，如果需要获取或者更新 Alice 的信息，那么某一时刻在内存中仅需存储关于 Alice 的单一页面。如所示：<br><img src="https://cdn.nlark.com/lark/0/2018/png/16292/1536026661190-d180e4d4-83b3-411a-81bb-9f6586a05165.png" alt="undefined"> </p>
-<p>好了，现在目光转向列式存储。如果是基于列的数据库，所有的数据都是以列的形式存储的。同样，我们假设每一列的存储只对应一个页面，那么用户的每个属性信息都会被单独存储在一个页面，如下：<br><img src="https://cdn.nlark.com/lark/0/2018/png/16292/1536026672176-fc4ab036-0a07-4601-8caf-157acca1384d.png" alt="undefined"> </p>
-<p>那么，现在考虑如下场景。如果使用的是行式数据库，你正好需要对一行数据进行操作时，数据库的性能是最好的，因为仅一个页面被放到了内存中（这只是个示例，实际上操作系统会带来不止一个页面的数据）。</p>
-<p>但是，如果你只是想对表中所有数据的某一列的数据做一些操作，这意味着你将花费时间去访问每一行，可你用到的仅是一行中的小部分数据。此时使用的若是列式数据库，就可以方便快捷的访问数据，因为每一列的信息都是存储在一起的。</p>
-<p>蛋疼的时候来了，假如现在使用的是列式存储，你又想获取 Alice 的所有信息，那你又必须去读取大量的列（页面）来获取所有的数据。正因为如此，才有了行式存储和列式存储的使用场景的区别。</p>
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>当你的核心业务是 OLTP 时，一个行式数据库，再加上优化操作，可能是个最好的选择。当你的核心业务是 OLAP 时，一个列式数据库，绝对是更好的选择</p>
-<blockquote>
-<p>过去机器贵，人便宜，所以把表拆来拆去，就为了省点空间。现在机器便宜了，Google之类的“创新”公司说，搞啥优化，机器坏了就扔，数据多了就多买机器，join慢就semi structure，并发慢就eventual consistency，硬盘慢就SSD，或者干脆in memory，于是有了MapReduce之类的神器，什么Column Store，in memory db也是一样的意思，不是过去做不出来，而是过去的人疯了才会做这样的系统。</p>
-</blockquote>
-
+          <p>本篇为Hexo示例文档.  # 这里是摘要部分,写1~2句话,就实现不全显示博文了..</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/19/%E7%AE%80%E6%98%8E%E6%89%BC%E8%A6%81%E4%BB%8B%E7%BB%8D%E8%A1%8C%E5%AD%98%E3%80%81%E5%88%97%E5%AD%98/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
