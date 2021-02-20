@@ -203,7 +203,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/20/NodeJS%E5%88%9D%E6%8E%A2/" class="post-title-link" itemprop="url">一致性hash算法</a>
+            <a href="/2021/02/20/NodeJS%E5%88%9D%E6%8E%A2/" class="post-title-link" itemprop="url">NodeJS初探</a>
         </h2>
 
         <div class="post-meta">
@@ -214,7 +214,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-02-20 17:15:06 / Modified: 17:39:07" itemprop="dateCreated datePublished" datetime="2021-02-20T17:15:06+08:00">2021-02-20</time>
+              <time title="Created: 2021-02-20 17:29:26 / Modified: 17:44:19" itemprop="dateCreated datePublished" datetime="2021-02-20T17:29:26+08:00">2021-02-20</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -222,7 +222,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E4%B8%80%E8%87%B4%E6%80%A7hash/" itemprop="url" rel="index"><span itemprop="name">一致性hash</span></a>
+                  <a href="/categories/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
                 </span>
             </span>
 
@@ -251,7 +251,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>介绍一致性HASH算法原理及其应用场景</p>
+          <p>NodeJs通过实践轮询机制处理耗时较长的请求</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/02/20/NodeJS%E5%88%9D%E6%8E%A2/#more" rel="contents">
@@ -303,7 +303,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-02-20 17:15:06 / Modified: 17:25:22" itemprop="dateCreated datePublished" datetime="2021-02-20T17:15:06+08:00">2021-02-20</time>
+              <time title="Created: 2021-02-20 17:15:06 / Modified: 17:56:54" itemprop="dateCreated datePublished" datetime="2021-02-20T17:15:06+08:00">2021-02-20</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -392,7 +392,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-02-20 17:08:01 / Modified: 17:13:09" itemprop="dateCreated datePublished" datetime="2021-02-20T17:08:01+08:00">2021-02-20</time>
+              <time title="Created: 2021-02-20 17:08:01 / Modified: 17:58:10" itemprop="dateCreated datePublished" datetime="2021-02-20T17:08:01+08:00">2021-02-20</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -429,11 +429,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="先通过TOP命令，找到CPU较高的进程，获取进程ID-PID"><a href="#先通过TOP命令，找到CPU较高的进程，获取进程ID-PID" class="headerlink" title="先通过TOP命令，找到CPU较高的进程，获取进程ID(PID)"></a>先通过TOP命令，找到CPU较高的进程，获取进程ID(PID)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top</span><br></pre></td></tr></table></figure>
-<h2 id="切换到线程视图"><a href="#切换到线程视图" class="headerlink" title="切换到线程视图"></a>切换到线程视图</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -mp $&#123;pid&#125; -o THREAD,tid,time</span><br></pre></td></tr></table></figure>
-<p>找到消耗CPU最多，最占CPU的线程,获取线程ID(TID)</p>
-<h2 id="将TID转成16进制格式"><a href="#将TID转成16进制格式" class="headerlink" title="将TID转成16进制格式"></a>将TID转成16进制格式</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf <span class="string">&quot;%x\n&quot;</span> tid</span><br></pre></td></tr></table></figure>
-<h2 id="通过jstack分析"><a href="#通过jstack分析" class="headerlink" title="通过jstack分析"></a>通过jstack分析</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack $&#123;pid&#125; |grep $&#123;tid&#125; -A 30</span><br></pre></td></tr></table></figure>
+          <p>线上排查问题</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/20/CPU-LOAD%E8%BF%87%E9%AB%98%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -610,7 +614,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
