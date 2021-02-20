@@ -20,19 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":true,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="参考:https:&#x2F;&#x2F;victoryofymk.github.io&#x2F;2018&#x2F;10&#x2F;23&#x2F;Hexo%E4%B8%AA%E6%80%A7%E5%8C%96next%E4%B8%BB%E9%A2%98&#x2F; https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;60424755">
+  <meta name="description" content="NodeJs通过实践轮询机制处理耗时较长的请求">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo优化之-个性化Next主题">
-<meta property="og:url" content="http://example.com/2021/02/20/Hexo-%E4%B8%AA%E6%80%A7%E5%8C%96-Next-%E4%B8%BB%E9%A2%98/index.html">
-<meta property="og:site_name" content="奥特曼的博客空间">
-<meta property="og:description" content="参考:https:&#x2F;&#x2F;victoryofymk.github.io&#x2F;2018&#x2F;10&#x2F;23&#x2F;Hexo%E4%B8%AA%E6%80%A7%E5%8C%96next%E4%B8%BB%E9%A2%98&#x2F; https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;60424755">
+<meta property="og:title" content="NodeJs初探">
+<meta property="og:url" content="http://example.com/2021/02/20/NodeJs%E5%88%9D%E6%8E%A2/index.html">
+<meta property="og:site_name" content="快乐工作,认真生活">
+<meta property="og:description" content="NodeJs通过实践轮询机制处理耗时较长的请求">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-02-20T03:48:58.000Z">
-<meta property="article:modified_time" content="2021-02-20T08:03:45.000Z">
+<meta property="article:published_time" content="2021-02-20T08:41:15.000Z">
+<meta property="article:modified_time" content="2021-02-20T08:58:51.000Z">
 <meta property="article:author" content="outman-fengg">
+<meta property="article:tag" content="nodejs">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/02/20/Hexo-%E4%B8%AA%E6%80%A7%E5%8C%96-Next-%E4%B8%BB%E9%A2%98/">
+<link rel="canonical" href="http://example.com/2021/02/20/NodeJs%E5%88%9D%E6%8E%A2/">
 
 
 <script id="page-configurations">
@@ -45,7 +46,7 @@
   };
 </script>
 
-  <title>Hexo优化之-个性化Next主题 | 奥特曼的博客空间</title>
+  <title>NodeJs初探 | 快乐工作,认真生活</title>
   
 
 
@@ -99,10 +100,10 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">奥特曼的博客空间</h1>
+      <h1 class="site-title">快乐工作,认真生活</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
-      <p class="site-subtitle" itemprop="description">Love & Peace</p>
+      <p class="site-subtitle" itemprop="description">Peace & Love </p>
   </div>
 
   <div class="site-nav-right">
@@ -125,6 +126,11 @@
         <li class="menu-item menu-item-博客">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>博客</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-关于我">
@@ -187,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh_cn">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/20/Hexo-%E4%B8%AA%E6%80%A7%E5%8C%96-Next-%E4%B8%BB%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/20/NodeJs%E5%88%9D%E6%8E%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/myself.jpeg">
@@ -196,11 +202,11 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="奥特曼的博客空间">
+      <meta itemprop="name" content="快乐工作,认真生活">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hexo优化之-个性化Next主题
+          NodeJs初探
         </h1>
 
         <div class="post-meta">
@@ -211,7 +217,16 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-02-20 11:48:58 / Modified: 16:03:45" itemprop="dateCreated datePublished" datetime="2021-02-20T11:48:58+08:00">2021-02-20</time>
+              <time title="Created: 2021-02-20 16:41:15 / Modified: 16:58:51" itemprop="dateCreated datePublished" datetime="2021-02-20T16:41:15+08:00">2021-02-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/node/" itemprop="url" rel="index"><span itemprop="name">node</span></a>
+                </span>
             </span>
 
           
@@ -223,8 +238,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2021/02/20/Hexo-%E4%B8%AA%E6%80%A7%E5%8C%96-Next-%E4%B8%BB%E9%A2%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/20/Hexo-个性化-Next-主题/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2021/02/20/NodeJs%E5%88%9D%E6%8E%A2/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/20/NodeJs初探/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -239,8 +254,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>参考:<br><a target="_blank" rel="noopener" href="https://victoryofymk.github.io/2018/10/23/Hexo%E4%B8%AA%E6%80%A7%E5%8C%96next%E4%B8%BB%E9%A2%98/">https://victoryofymk.github.io/2018/10/23/Hexo%E4%B8%AA%E6%80%A7%E5%8C%96next%E4%B8%BB%E9%A2%98/</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/60424755">https://zhuanlan.zhihu.com/p/60424755</a></p>
+        <p>NodeJs通过实践轮询机制处理耗时较长的请求</p>
+<a id="more"></a>
+
+<h3 id="NodeJs的事件驱动机制"><a href="#NodeJs的事件驱动机制" class="headerlink" title="NodeJs的事件驱动机制"></a>NodeJs的事件驱动机制</h3><p>NodeJs通过实践轮询机制处理耗时较长的请求</p>
+<ul>
+<li>Apache通过采取多线程方式处理多请求</li>
+<li>Nginx和NodeJS都是单线程，实践驱动机制</li>
+<li>多线程或者是多进程会带来内存的严重消耗</li>
+</ul>
+<h3 id="NodeJS如何通过单线程实现多请求处理"><a href="#NodeJS如何通过单线程实现多请求处理" class="headerlink" title="NodeJS如何通过单线程实现多请求处理"></a>NodeJS如何通过单线程实现多请求处理</h3><p>just use callbacks when you are doing I/O</p>
+<p>NodeJS 依赖一个事件库Libev来实现事件的轮询</p>
+<h3 id="关于NodeJS单线程多说两句"><a href="#关于NodeJS单线程多说两句" class="headerlink" title="关于NodeJS单线程多说两句"></a>关于NodeJS单线程多说两句</h3><p>NodeJS的单线程指的是NodeJS本身不提供创建线程的能力，但是NodeJS运行时环境是多线程的，它会维护一个执行队列，循环检测，调度JavaScript线程来执行</p>
 
     </div>
 
@@ -249,6 +274,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+          </div>
 
         
 
@@ -256,10 +284,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/02/19/Presto%E5%85%A5%E5%9D%91%E6%8C%87%E5%8D%97/" rel="prev" title="Presto入坑指南">
-      <i class="fa fa-chevron-left"></i> Presto入坑指南
+    <a href="/2021/02/20/Hexo%E4%B8%80%E4%BA%9B%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE/" rel="prev" title="Hexo个性化配置">
+      <i class="fa fa-chevron-left"></i> Hexo个性化配置
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/02/20/CPU-LOAD%E8%BF%87%E9%AB%98%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5/" rel="next" title="CPU/LOAD过高如何排查">
+      CPU/LOAD过高如何排查 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -325,6 +356,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#NodeJs%E7%9A%84%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">NodeJs的事件驱动机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NodeJS%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%8D%95%E7%BA%BF%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%A4%9A%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">NodeJS如何通过单线程实现多请求处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8ENodeJS%E5%8D%95%E7%BA%BF%E7%A8%8B%E5%A4%9A%E8%AF%B4%E4%B8%A4%E5%8F%A5"><span class="nav-number">3.</span> <span class="nav-text">关于NodeJS单线程多说两句</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -339,9 +371,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
       </div>
   </nav>
 </div>
@@ -451,9 +492,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "http://example.com/2021/02/20/Hexo-%E4%B8%AA%E6%80%A7%E5%8C%96-Next-%E4%B8%BB%E9%A2%98/";
-    this.page.identifier = "2021/02/20/Hexo-个性化-Next-主题/";
-    this.page.title = "Hexo优化之-个性化Next主题";
+    this.page.url = "http://example.com/2021/02/20/NodeJs%E5%88%9D%E6%8E%A2/";
+    this.page.identifier = "2021/02/20/NodeJs初探/";
+    this.page.title = "NodeJs初探";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
@@ -470,5 +511,5 @@
   });
 </script>
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/chitose.model.json"},"display":{"position":"right","width":180,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":180,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
