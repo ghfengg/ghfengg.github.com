@@ -51,6 +51,38 @@
       </categories>
   </entry>
   <entry>
+    <title>volatile-JVM同步原语</title>
+    <url>/2021/02/20/volatile-JVM%E5%90%8C%E6%AD%A5%E5%8E%9F%E8%AF%AD/</url>
+    <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote>
+<p>在Java中  volatile、synchronized、final 实现可见性。</p>
+</blockquote>
+<p>java内存模型(JMM,区别JVM内存模型)中的可见性、原子性、有序性</p>
+<a id="more"></a>
+
+<h5 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h5><p>一个线程修改的状态对另一个线程是可见的，如果变量用volatile修饰后就会具有可见性。volatile修饰的变量不允许线程内部缓存和重排序，即直接修改内存，所以对其他线程是可见的。但是要注意的是，它并不能保证变量的原子性,比如:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">a++; </span><br></pre></td></tr></table></figure>
+<p>这里<code>++</code>操作并非原子操作，对应生成的字节码指令:getstatic, iconst, iadd, putstatic。volatile 只保证了 <strong>getstatic</strong> 将a值读取到操作栈顶时a值是正确的(<strong>这个就是所谓的对其他线程可见的那一步，下面的几步操作不会再去读取内存数据</strong>)，但是进行后三个操作前，其他线程可能进行了a++操作，操作栈顶的a值就是无效的了，这时候再putstatic就会产生线程不安全问题；</p>
+<h5 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h5><blockquote>
+<p>在 Java 中 synchronized 和在 lock、unlock 中操作保证原子性。</p>
+</blockquote>
+<p>比如a=0 即为原子操作（注意，对于long,double类型的并非原子操作，可以使用AtomicLong,AtomicDouble），但是<code>a++</code>并非原子操作，实际等于<code>a = a + 1</code>。非原子操作会存在线程安全问题，需要使用同步操作(synchronized)使其变成原子操作</p>
+<h5 id="有序性"><a href="#有序性" class="headerlink" title="有序性"></a>有序性</h5><p>Java 语言提供了 volatile 和 synchronized 两个关键字来保证线程之间操作的有序性，volatile 是因为其本身包含“禁止指令重排序”的语义，synchronized 是由“一个变量在同一个时刻只允许一条线程对其进行 lock 操作”这条规则获得的，此规则决定了持有同一个对象锁的两个同步块只能串行执行。</p>
+<h2 id="volatile原理"><a href="#volatile原理" class="headerlink" title="volatile原理"></a>volatile原理</h2><p>Java语言提供了一种稍弱的同步机制，即volatile变量，用来确保将变量的更新操作通知到其他线程。当把变量声明为volatile类型后，编译器与运行时都会注意到这个变量是共享的，因此不会将该变量上的操作与其他内存操作一起重排序。volatile变量不会被缓存在寄存器或者对其他处理器不可见的地方，因此在读取volatile类型的变量时总会返回最新写入的值</p>
+<p><img src="/images/volatitle1.jpg"> </p>
+<h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 以下两个变量加了volatile保证多线程操作时的可见性</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> String cacheVersion;</span><br><span class="line">	</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> String ZKCacheVersion;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> &lt;T&gt; <span class="function">T <span class="title">localGetForHive</span><span class="params">(String key, Supplier&lt;T&gt; supplier)</span> </span>&#123;</span><br><span class="line">	String newCacheVersion = queryCacheVersion(<span class="keyword">false</span>);</span><br><span class="line">	String newZKCacheVersion = AppConfig.getConfig(<span class="string">&quot;xxxKey&quot;</span>, <span class="string">&quot;0&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (!newCacheVersion.equals(cacheVersion) || !neZKacheVersion.equals(ZKCacheVersion)) &#123;</span><br><span class="line">		<span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">			newCacheVersion = queryCacheVersion(<span class="keyword">false</span>);</span><br><span class="line">			newZKCacheVersion = AppConfig.getConfig(<span class="string">&quot;xxKey&quot;</span>, <span class="string">&quot;0&quot;</span>);</span><br><span class="line">			<span class="keyword">if</span> (!newCacheVersion.equals(cacheVersion)) &#123;</span><br><span class="line">				localCache.clear(LocalCacheKey.CDS_SCREEN_ + ZKCacheVersion + <span class="string">&quot;_&quot;</span> + cacheVersion + <span class="string">&quot;_&quot;</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (!newZKCacheVersion.equals(ZKCacheVersion)) &#123;</span><br><span class="line">				localCache.clear(LocalCacheKey.CDS_SCREEN_ + ZKCacheVersion + <span class="string">&quot;_&quot;</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			cacheVersion = newCacheVersion;</span><br><span class="line">			ZKCacheVersion = newZKCacheVersion;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> localCache.get(LocalCacheKey.CDS_SCREEN_ + ZKCacheVersion + <span class="string">&quot;_&quot;</span> + cacheVersion + <span class="string">&quot;_&quot;</span> + key, supplier);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码考虑到了线程安全问题，但是在使用方式上有几点注意:</p>
+<ul>
+<li>localGetForHive 方法中有很大一块方法区使用了synchronized,synchronized的使用原则是包含的逻辑越少越好</li>
+<li>volatile修饰的两个变量在localGetForHive方法中只有原子赋值操作，所以不需要再使用synchronized来保证原子性，稍稍有些性能损耗(据说JAVA8之后对synchronized的性能做了优化)</li>
+</ul>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>volatile是JVM提供的另一个轻量级的同步原语言，在保障了线程可见性的同时也限制了指令重排序。但是在解决多线程场景下，为了保障线程安全需要配合synchronized关键字使用,对于自增操作可以使用 Atomic包装类,(AtomicLong,AtomicDouble等)</p>
+<h2 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h2><p><a href="https://stackoverflow.com/questions/10122907/volatile-with-synchronized-together">https://stackoverflow.com/questions/10122907/volatile-with-synchronized-together</a><br><a href="http://www.cnblogs.com/zhengbin/p/5654805.html">http://www.cnblogs.com/zhengbin/p/5654805.html</a><br><a href="https://www.geeksforgeeks.org/volatile-keyword-in-java/">https://www.geeksforgeeks.org/volatile-keyword-in-java/</a></p>
+]]></content>
+      <categories>
+        <category>多线程</category>
+      </categories>
+  </entry>
+  <entry>
     <title>一致性hash算法</title>
     <url>/2021/02/20/%E4%B8%80%E8%87%B4%E6%80%A7hash%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<p>介绍一致性HASH算法原理及其应用场景</p>
@@ -95,6 +127,32 @@
 ]]></content>
       <categories>
         <category>一致性hash</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>数据库数据结构</title>
+    <url>/2021/02/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<p>广义上的数据库常用的数据结构</p>
+<a id="more"></a>
+
+<h2 id="B树"><a href="#B树" class="headerlink" title="B树"></a>B树</h2><blockquote>
+<p>B树是对二叉树的一种扩展,允许每个节点有M-1个子节点<br>下图是一个M=4 阶的B树:<br><img src="/images/database1.jpg"></p>
+</blockquote>
+<h2 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h2><blockquote>
+<p>B+树是对B树的一种变形树，它与B树的差异在于:<br></p>
+</blockquote>
+<ol>
+<li>有k个子结点的结点必然有k个关键码<br></li>
+<li>非叶结点仅具有索引作用，跟记录有关的信息均存放在叶结点中<br></li>
+<li>树的所有叶结点构成一个有序链表，可以按照关键码排序的次序遍历全部记录<br></li>
+</ol>
+<p><img src="/images/database2.jpg"></p>
+<p>B+树能够高效的范围扫描功能，这得益于它的叶子节点相互连接并且主键有序，扫描时避免了耗时的遍历树的操作。这也是B+树被关系型数据库用作索引的原因之一</p>
+<h2 id="LSM数"><a href="#LSM数" class="headerlink" title="LSM数"></a>LSM数</h2><p>Log-structured merge-tree:HBase是基于LSM的数据结构</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://zhuanlan.zhihu.com/p/27700617">https://zhuanlan.zhihu.com/p/27700617</a><br><a href="https://www.cnblogs.com/vincently/p/4526560.html">https://www.cnblogs.com/vincently/p/4526560.html</a><br><a href="https://www.open-open.com/lib/view/open1424916275249.html">https://www.open-open.com/lib/view/open1424916275249.html</a></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
       </categories>
   </entry>
 </search>
