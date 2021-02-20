@@ -43,7 +43,7 @@
 <blockquote>
 <p>在分布式集群中，对机器的添加删除，或者机器故障后自动脱离集群这些操作是分布式集群管理最基本的功能。如果采用常用的hash(object)%N算法，那么在有机器添加或者删除后，很多原有的数据就无法找到了，这样严重的违反了单调性原则。接下来主要讲解一下一致性哈希算法是如何设计的：</p>
 </blockquote>
-<h3 id="环形HASH空间"><a href="#环形HASH空间" class="headerlink" title="环形HASH空间"></a>环形HASH空间</h3><p>按照常用的hash算法来将对应的key哈希到一个具有2^32次方个桶的空间中，即0~(2^32)-1的数字空间中。现在我们可以将这些数字头尾相连，想象成一个闭合的环形。如下图<br><img src="/images/hash_1.jpg"><br>把数据通过一定的hash算法处理后映射到环上</p>
+<h3 id="环形HASH空间"><a href="#环形HASH空间" class="headerlink" title="环形HASH空间"></a>环形HASH空间</h3><p>按照常用的hash算法来将对应的key哈希到一个具有2^32次方个桶的空间中，即0~(2^32)-1的数字空间中。现在我们可以将这些数字头尾相连，想象成一个闭合的环形。如下图<br><img src="/images/hash1.jpg"><br>把数据通过一定的hash算法处理后映射到环上</p>
 ]]></content>
       <categories>
         <category>一致性hash</category>
