@@ -1,140 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>2021读书计划</title>
-      <link href="2021/02/23/2021%E8%AF%BB%E4%B9%A6%E8%AE%A1%E5%88%92/"/>
-      <url>2021/02/23/2021%E8%AF%BB%E4%B9%A6%E8%AE%A1%E5%88%92/</url>
-      
-        <content type="html"><![CDATA[<ul><li>3.5:一个月读完一本书</li><li>3.75: 每本书读完写一篇读后感<a id="more"></a></li></ul><h3 id="书单"><a href="#书单" class="headerlink" title="书单"></a>书单</h3><ol><li>《乌合之众》</li><li>《未来简史》</li><li>《人类简史》</li><li>《时间简史》</li><li>…</li></ol>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>CPU/LOAD过高如何排查</title>
+    <url>/2021/02/20/CPU-LOAD%E8%BF%87%E9%AB%98%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5/</url>
+    <content><![CDATA[<p>线上排查问题</p>
+<a id="more"></a>
+
+
+<h2 id="先通过TOP命令，找到CPU较高的进程，获取进程ID-PID"><a href="#先通过TOP命令，找到CPU较高的进程，获取进程ID-PID" class="headerlink" title="先通过TOP命令，找到CPU较高的进程，获取进程ID(PID)"></a>先通过TOP命令，找到CPU较高的进程，获取进程ID(PID)</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">top</span><br></pre></td></tr></table></figure>
+<h2 id="切换到线程视图"><a href="#切换到线程视图" class="headerlink" title="切换到线程视图"></a>切换到线程视图</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ps -mp $&#123;pid&#125; -o THREAD,tid,time</span><br></pre></td></tr></table></figure>
+<p>找到消耗CPU最多，最占CPU的线程,获取线程ID(TID)</p>
+<h2 id="将TID转成16进制格式"><a href="#将TID转成16进制格式" class="headerlink" title="将TID转成16进制格式"></a>将TID转成16进制格式</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">printf <span class="string">&quot;%x\n&quot;</span> tid</span><br></pre></td></tr></table></figure>
+<h2 id="通过jstack分析"><a href="#通过jstack分析" class="headerlink" title="通过jstack分析"></a>通过jstack分析</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">jstack $&#123;pid&#125; |grep $&#123;tid&#125; -A 30</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-          
-          <category> 读书 </category>
-          
+        <category>线上问题排查</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>数据库数据结构</title>
-      <link href="2021/02/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-      <url>2021/02/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
-      
-        <content type="html"><![CDATA[<p>广义上的数据库常用的数据结构</p><a id="more"></a><h2 id="B树"><a href="#B树" class="headerlink" title="B树"></a>B树</h2><blockquote><p>B树是对二叉树的一种扩展,允许每个节点有M-1个子节点<br>下图是一个M=4 阶的B树:<br><img src="/images/database1.jpg"></p></blockquote><h2 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h2><blockquote><p>B+树是对B树的一种变形树，它与B树的差异在于:<br></p></blockquote><ol><li>有k个子结点的结点必然有k个关键码<br></li><li>非叶结点仅具有索引作用，跟记录有关的信息均存放在叶结点中<br></li><li>树的所有叶结点构成一个有序链表，可以按照关键码排序的次序遍历全部记录<br></li></ol><p><img src="/images/database2.jpg"></p><p>B+树能够高效的范围扫描功能，这得益于它的叶子节点相互连接并且主键有序，扫描时避免了耗时的遍历树的操作。这也是B+树被关系型数据库用作索引的原因之一</p><h2 id="LSM数"><a href="#LSM数" class="headerlink" title="LSM数"></a>LSM数</h2><p>Log-structured merge-tree:HBase是基于LSM的数据结构</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://zhuanlan.zhihu.com/p/27700617">https://zhuanlan.zhihu.com/p/27700617</a><br><a href="https://www.cnblogs.com/vincently/p/4526560.html">https://www.cnblogs.com/vincently/p/4526560.html</a><br><a href="https://www.open-open.com/lib/view/open1424916275249.html">https://www.open-open.com/lib/view/open1424916275249.html</a></p>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>Hexo个性化配置</title>
+    <url>/2021/02/20/Hexo%E4%B8%80%E4%BA%9B%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>Hexo个性优化</p>
+<a id="more"></a>
+
+<h2 id="【参考资料】"><a href="#【参考资料】" class="headerlink" title="【参考资料】"></a>【参考资料】</h2><ol>
+<li><a href="https://victoryofymk.github.io/2018/10/23/Hexo%E4%B8%AA%E6%80%A7%E5%8C%96next%E4%B8%BB%E9%A2%98/">https://victoryofymk.github.io/2018/10/23/Hexo%E4%B8%AA%E6%80%A7%E5%8C%96next%E4%B8%BB%E9%A2%98/</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/60424755">https://zhuanlan.zhihu.com/p/60424755</a></li>
+</ol>
+]]></content>
       <categories>
-          
-          <category> 数据库 </category>
-          
+        <category>Hexo</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>volatile-JVM同步原语</title>
-      <link href="2021/02/20/volatile-JVM%E5%90%8C%E6%AD%A5%E5%8E%9F%E8%AF%AD/"/>
-      <url>2021/02/20/volatile-JVM%E5%90%8C%E6%AD%A5%E5%8E%9F%E8%AF%AD/</url>
-      
-        <content type="html"><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote><p>在Java中  volatile、synchronized、final 实现可见性。</p></blockquote><p>java内存模型(JMM,区别JVM内存模型)中的可见性、原子性、有序性</p><a id="more"></a><h5 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h5><p>一个线程修改的状态对另一个线程是可见的，如果变量用volatile修饰后就会具有可见性。volatile修饰的变量不允许线程内部缓存和重排序，即直接修改内存，所以对其他线程是可见的。但是要注意的是，它并不能保证变量的原子性,比如:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">a++; </span><br></pre></td></tr></table></figure><p>这里<code>++</code>操作并非原子操作，对应生成的字节码指令:getstatic, iconst, iadd, putstatic。volatile 只保证了 <strong>getstatic</strong> 将a值读取到操作栈顶时a值是正确的(<strong>这个就是所谓的对其他线程可见的那一步，下面的几步操作不会再去读取内存数据</strong>)，但是进行后三个操作前，其他线程可能进行了a++操作，操作栈顶的a值就是无效的了，这时候再putstatic就会产生线程不安全问题；</p><h5 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h5><blockquote><p>在 Java 中 synchronized 和在 lock、unlock 中操作保证原子性。</p></blockquote><p>比如a=0 即为原子操作（注意，对于long,double类型的并非原子操作，可以使用AtomicLong,AtomicDouble），但是<code>a++</code>并非原子操作，实际等于<code>a = a + 1</code>。非原子操作会存在线程安全问题，需要使用同步操作(synchronized)使其变成原子操作</p><h5 id="有序性"><a href="#有序性" class="headerlink" title="有序性"></a>有序性</h5><p>Java 语言提供了 volatile 和 synchronized 两个关键字来保证线程之间操作的有序性，volatile 是因为其本身包含“禁止指令重排序”的语义，synchronized 是由“一个变量在同一个时刻只允许一条线程对其进行 lock 操作”这条规则获得的，此规则决定了持有同一个对象锁的两个同步块只能串行执行。</p><h2 id="volatile原理"><a href="#volatile原理" class="headerlink" title="volatile原理"></a>volatile原理</h2><p>Java语言提供了一种稍弱的同步机制，即volatile变量，用来确保将变量的更新操作通知到其他线程。当把变量声明为volatile类型后，编译器与运行时都会注意到这个变量是共享的，因此不会将该变量上的操作与其他内存操作一起重排序。volatile变量不会被缓存在寄存器或者对其他处理器不可见的地方，因此在读取volatile类型的变量时总会返回最新写入的值</p><p><img src="/images/volatitle1.jpg"> </p><h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下两个变量加了volatile保证多线程操作时的可见性</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> String cacheVersion;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> String ZKCacheVersion;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> &lt;T&gt; <span class="function">T <span class="title">localGetForHive</span><span class="params">(String key, Supplier&lt;T&gt; supplier)</span> </span>&#123;</span><br><span class="line">String newCacheVersion = queryCacheVersion(<span class="keyword">false</span>);</span><br><span class="line">String newZKCacheVersion = AppConfig.getConfig(<span class="string">&quot;xxxKey&quot;</span>, <span class="string">&quot;0&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (!newCacheVersion.equals(cacheVersion) || !neZKacheVersion.equals(ZKCacheVersion)) &#123;</span><br><span class="line"><span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">newCacheVersion = queryCacheVersion(<span class="keyword">false</span>);</span><br><span class="line">newZKCacheVersion = AppConfig.getConfig(<span class="string">&quot;xxKey&quot;</span>, <span class="string">&quot;0&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (!newCacheVersion.equals(cacheVersion)) &#123;</span><br><span class="line">localCache.clear(LocalCacheKey.CDS_SCREEN_ + ZKCacheVersion + <span class="string">&quot;_&quot;</span> + cacheVersion + <span class="string">&quot;_&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (!newZKCacheVersion.equals(ZKCacheVersion)) &#123;</span><br><span class="line">localCache.clear(LocalCacheKey.CDS_SCREEN_ + ZKCacheVersion + <span class="string">&quot;_&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">cacheVersion = newCacheVersion;</span><br><span class="line">ZKCacheVersion = newZKCacheVersion;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> localCache.get(LocalCacheKey.CDS_SCREEN_ + ZKCacheVersion + <span class="string">&quot;_&quot;</span> + cacheVersion + <span class="string">&quot;_&quot;</span> + key, supplier);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>上面代码考虑到了线程安全问题，但是在使用方式上有几点注意:</p><ul><li>localGetForHive 方法中有很大一块方法区使用了synchronized,synchronized的使用原则是包含的逻辑越少越好</li><li>volatile修饰的两个变量在localGetForHive方法中只有原子赋值操作，所以不需要再使用synchronized来保证原子性，稍稍有些性能损耗(据说JAVA8之后对synchronized的性能做了优化)</li></ul><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>volatile是JVM提供的另一个轻量级的同步原语言，在保障了线程可见性的同时也限制了指令重排序。但是在解决多线程场景下，为了保障线程安全需要配合synchronized关键字使用,对于自增操作可以使用 Atomic包装类,(AtomicLong,AtomicDouble等)</p><h2 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h2><p><a href="https://stackoverflow.com/questions/10122907/volatile-with-synchronized-together">https://stackoverflow.com/questions/10122907/volatile-with-synchronized-together</a><br><a href="http://www.cnblogs.com/zhengbin/p/5654805.html">http://www.cnblogs.com/zhengbin/p/5654805.html</a><br><a href="https://www.geeksforgeeks.org/volatile-keyword-in-java/">https://www.geeksforgeeks.org/volatile-keyword-in-java/</a></p>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>NodeJS初探</title>
+    <url>/2021/02/20/NodeJS%E5%88%9D%E6%8E%A2/</url>
+    <content><![CDATA[<p>NodeJs通过实践轮询机制处理耗时较长的请求</p>
+<a id="more"></a>
+
+<h3 id="NodeJS事件驱动机制"><a href="#NodeJS事件驱动机制" class="headerlink" title="NodeJS事件驱动机制"></a>NodeJS事件驱动机制</h3><ol>
+<li>Apache通过采取多线程方式处理多请求</li>
+<li>Nginx和NodeJS都是单线程，实践驱动机制</li>
+<li>多线程或者是多进程会带来内存的严重消耗</li>
+</ol>
+<h3 id="NodeJS如何通过单线程实现多请求处理"><a href="#NodeJS如何通过单线程实现多请求处理" class="headerlink" title="NodeJS如何通过单线程实现多请求处理"></a>NodeJS如何通过单线程实现多请求处理</h3><p>just use callbacks when you are doing I/O</p>
+<p>NodeJS 依赖一个事件库Libev来实现事件的轮询</p>
+<h3 id="关于NodeJS单线程多说两句"><a href="#关于NodeJS单线程多说两句" class="headerlink" title="关于NodeJS单线程多说两句"></a>关于NodeJS单线程多说两句</h3><p>NodeJS的单线程指的是NodeJS本身不提供创建线程的能力，但是NodeJS运行时环境是多线程的，它会维护一个执行队列，循环检测，调度JavaScript线程来执行</p>
+]]></content>
       <categories>
-          
-          <category> 多线程 </category>
-          
+        <category>NodeJS</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>NodeJS初探</title>
-      <link href="2021/02/20/NodeJS%E5%88%9D%E6%8E%A2/"/>
-      <url>2021/02/20/NodeJS%E5%88%9D%E6%8E%A2/</url>
-      
-        <content type="html"><![CDATA[<p>NodeJs通过实践轮询机制处理耗时较长的请求</p><a id="more"></a><h3 id="NodeJS事件驱动机制"><a href="#NodeJS事件驱动机制" class="headerlink" title="NodeJS事件驱动机制"></a>NodeJS事件驱动机制</h3><ol><li>Apache通过采取多线程方式处理多请求</li><li>Nginx和NodeJS都是单线程，实践驱动机制</li><li>多线程或者是多进程会带来内存的严重消耗</li></ol><h3 id="NodeJS如何通过单线程实现多请求处理"><a href="#NodeJS如何通过单线程实现多请求处理" class="headerlink" title="NodeJS如何通过单线程实现多请求处理"></a>NodeJS如何通过单线程实现多请求处理</h3><p>just use callbacks when you are doing I/O</p><p>NodeJS 依赖一个事件库Libev来实现事件的轮询</p><h3 id="关于NodeJS单线程多说两句"><a href="#关于NodeJS单线程多说两句" class="headerlink" title="关于NodeJS单线程多说两句"></a>关于NodeJS单线程多说两句</h3><p>NodeJS的单线程指的是NodeJS本身不提供创建线程的能力，但是NodeJS运行时环境是多线程的，它会维护一个执行队列，循环检测，调度JavaScript线程来执行</p>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>volatile-JVM同步原语</title>
+    <url>/2021/02/20/volatile-JVM%E5%90%8C%E6%AD%A5%E5%8E%9F%E8%AF%AD/</url>
+    <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote>
+<p>在Java中  volatile、synchronized、final 实现可见性。</p>
+</blockquote>
+<p>java内存模型(JMM,区别JVM内存模型)中的可见性、原子性、有序性</p>
+<a id="more"></a>
+
+<h5 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h5><p>一个线程修改的状态对另一个线程是可见的，如果变量用volatile修饰后就会具有可见性。volatile修饰的变量不允许线程内部缓存和重排序，即直接修改内存，所以对其他线程是可见的。但是要注意的是，它并不能保证变量的原子性,比如:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">a++; </span><br></pre></td></tr></table></figure>
+<p>这里<code>++</code>操作并非原子操作，对应生成的字节码指令:getstatic, iconst, iadd, putstatic。volatile 只保证了 <strong>getstatic</strong> 将a值读取到操作栈顶时a值是正确的(<strong>这个就是所谓的对其他线程可见的那一步，下面的几步操作不会再去读取内存数据</strong>)，但是进行后三个操作前，其他线程可能进行了a++操作，操作栈顶的a值就是无效的了，这时候再putstatic就会产生线程不安全问题；</p>
+<h5 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h5><blockquote>
+<p>在 Java 中 synchronized 和在 lock、unlock 中操作保证原子性。</p>
+</blockquote>
+<p>比如a=0 即为原子操作（注意，对于long,double类型的并非原子操作，可以使用AtomicLong,AtomicDouble），但是<code>a++</code>并非原子操作，实际等于<code>a = a + 1</code>。非原子操作会存在线程安全问题，需要使用同步操作(synchronized)使其变成原子操作</p>
+<h5 id="有序性"><a href="#有序性" class="headerlink" title="有序性"></a>有序性</h5><p>Java 语言提供了 volatile 和 synchronized 两个关键字来保证线程之间操作的有序性，volatile 是因为其本身包含“禁止指令重排序”的语义，synchronized 是由“一个变量在同一个时刻只允许一条线程对其进行 lock 操作”这条规则获得的，此规则决定了持有同一个对象锁的两个同步块只能串行执行。</p>
+<h2 id="volatile原理"><a href="#volatile原理" class="headerlink" title="volatile原理"></a>volatile原理</h2><p>Java语言提供了一种稍弱的同步机制，即volatile变量，用来确保将变量的更新操作通知到其他线程。当把变量声明为volatile类型后，编译器与运行时都会注意到这个变量是共享的，因此不会将该变量上的操作与其他内存操作一起重排序。volatile变量不会被缓存在寄存器或者对其他处理器不可见的地方，因此在读取volatile类型的变量时总会返回最新写入的值</p>
+<p><img src="/images/volatitle1.jpg"> </p>
+<h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 以下两个变量加了volatile保证多线程操作时的可见性</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> String cacheVersion;</span><br><span class="line">	</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> String ZKCacheVersion;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> &lt;T&gt; <span class="function">T <span class="title">localGetForHive</span><span class="params">(String key, Supplier&lt;T&gt; supplier)</span> </span>&#123;</span><br><span class="line">	String newCacheVersion = queryCacheVersion(<span class="keyword">false</span>);</span><br><span class="line">	String newZKCacheVersion = AppConfig.getConfig(<span class="string">&quot;xxxKey&quot;</span>, <span class="string">&quot;0&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (!newCacheVersion.equals(cacheVersion) || !neZKacheVersion.equals(ZKCacheVersion)) &#123;</span><br><span class="line">		<span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">			newCacheVersion = queryCacheVersion(<span class="keyword">false</span>);</span><br><span class="line">			newZKCacheVersion = AppConfig.getConfig(<span class="string">&quot;xxKey&quot;</span>, <span class="string">&quot;0&quot;</span>);</span><br><span class="line">			<span class="keyword">if</span> (!newCacheVersion.equals(cacheVersion)) &#123;</span><br><span class="line">				localCache.clear(LocalCacheKey.CDS_SCREEN_ + ZKCacheVersion + <span class="string">&quot;_&quot;</span> + cacheVersion + <span class="string">&quot;_&quot;</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (!newZKCacheVersion.equals(ZKCacheVersion)) &#123;</span><br><span class="line">				localCache.clear(LocalCacheKey.CDS_SCREEN_ + ZKCacheVersion + <span class="string">&quot;_&quot;</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			cacheVersion = newCacheVersion;</span><br><span class="line">			ZKCacheVersion = newZKCacheVersion;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> localCache.get(LocalCacheKey.CDS_SCREEN_ + ZKCacheVersion + <span class="string">&quot;_&quot;</span> + cacheVersion + <span class="string">&quot;_&quot;</span> + key, supplier);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码考虑到了线程安全问题，但是在使用方式上有几点注意:</p>
+<ul>
+<li>localGetForHive 方法中有很大一块方法区使用了synchronized,synchronized的使用原则是包含的逻辑越少越好</li>
+<li>volatile修饰的两个变量在localGetForHive方法中只有原子赋值操作，所以不需要再使用synchronized来保证原子性，稍稍有些性能损耗(据说JAVA8之后对synchronized的性能做了优化)</li>
+</ul>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>volatile是JVM提供的另一个轻量级的同步原语言，在保障了线程可见性的同时也限制了指令重排序。但是在解决多线程场景下，为了保障线程安全需要配合synchronized关键字使用,对于自增操作可以使用 Atomic包装类,(AtomicLong,AtomicDouble等)</p>
+<h2 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h2><p><a href="https://stackoverflow.com/questions/10122907/volatile-with-synchronized-together">https://stackoverflow.com/questions/10122907/volatile-with-synchronized-together</a><br><a href="http://www.cnblogs.com/zhengbin/p/5654805.html">http://www.cnblogs.com/zhengbin/p/5654805.html</a><br><a href="https://www.geeksforgeeks.org/volatile-keyword-in-java/">https://www.geeksforgeeks.org/volatile-keyword-in-java/</a></p>
+]]></content>
       <categories>
-          
-          <category> NodeJS </category>
-          
+        <category>多线程</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>一致性hash算法</title>
-      <link href="2021/02/20/%E4%B8%80%E8%87%B4%E6%80%A7hash%E7%AE%97%E6%B3%95/"/>
-      <url>2021/02/20/%E4%B8%80%E8%87%B4%E6%80%A7hash%E7%AE%97%E6%B3%95/</url>
-      
-        <content type="html"><![CDATA[<p>介绍一致性HASH算法原理及其应用场景</p><a id="more"></a><h3 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h3><p>一致性哈希算法在1997年由麻省理工学院提出的一种分布式哈希（DHT）实现算法，设计目标是为了解决因特网中的热点(Hot spot)问题，初衷和CARP十分类似。一致性哈希修正了CARP使用的简单哈希算法带来的问题，使得分布式哈希（DHT）可以在P2P环境中真正得到应用</p><h3 id="一致性hash算法提出了在动态变化的Cache环境中，判定哈希算法好坏的四个定义"><a href="#一致性hash算法提出了在动态变化的Cache环境中，判定哈希算法好坏的四个定义" class="headerlink" title="一致性hash算法提出了在动态变化的Cache环境中，判定哈希算法好坏的四个定义"></a>一致性hash算法提出了在动态变化的Cache环境中，判定哈希算法好坏的四个定义</h3><ol><li>平衡性(Balance)：平衡性是指哈希的结果能够尽可能分布到所有的缓冲中去，这样可以使得所有的缓冲空间都得到利用，很多哈希算法都能够满足这一条件</li><li>单调性(Monotonicity)：单调性是指如果已经有一些内容通过哈希分派到了相应的缓冲中，又有新的缓冲加入到系统中，哈希的结果应能够保证原有已分配的内容可以被映射到原有的或者新的缓冲中去，而不会被映射到旧的缓冲集合中的其他缓冲区</li><li>分散性(Spread)：在分布式环境中，终端有可能看不到所有的缓冲，而是只能看到其中的一部分。当终端希望通过哈希过程将内容映射到缓冲上时，由于不同终端所见的缓冲范围有可能不同，从而导致哈希的结果不一致，最终的结果是相同的内容被不同的终端映射到不同的缓冲区中。这种情况显然是应该避免的，因为它导致相同内容被存储到不同缓冲中去，降低了系统存储的效率。分散性的定义就是上述情况发生的严重程度。好的哈希算法应能够尽量避免不一致的情况发生，也就是尽量降低分散性</li><li>负载(Load)：负载问题实际上是从另一个角度看待分散性问题。既然不同的终端可能将相同的内容映射到不同的缓冲区中，那么对于一个特定的缓冲区而言，也可能被不同的用户映射为不同 的内容。与分散性一样，这种情况也是应当避免的，因此好的哈希算法应能够尽量降低缓冲的负荷</li></ol><blockquote><p>在分布式集群中，对机器的添加删除，或者机器故障后自动脱离集群这些操作是分布式集群管理最基本的功能。如果采用常用的hash(object)%N算法，那么在有机器添加或者删除后，很多原有的数据就无法找到了，这样严重的违反了单调性原则。</p></blockquote><p>接下来主要讲解一下一致性哈希算法是如何设计的</p><h3 id="环形HASH空间"><a href="#环形HASH空间" class="headerlink" title="环形HASH空间"></a>环形HASH空间</h3><p>按照常用的hash算法来将对应的key哈希到一个具有2^32次方个桶的空间中，即0~(2^32)-1的数字空间中。现在我们可以将这些数字头尾相连，想象成一个闭合的环形。如下图把数据通过一定的hash算法处理后映射到环上</p><p><img src="/images/hash1.jpg"></p><p>现在我们将object1、object2、object3、object4四个对象通过特定的Hash函数计算出对应的key值，然后散列到Hash环上。如下图:<br><br>Hash(object1) = key1；<br><br>Hash(object2) = key2；<br><br>Hash(object3) = key3；<br><br>Hash(object4) = key4；<br><br><img src="/images/hash2.jpg"></p><h3 id="将机器通过hash算法映射到环上"><a href="#将机器通过hash算法映射到环上" class="headerlink" title="将机器通过hash算法映射到环上"></a>将机器通过hash算法映射到环上</h3><p>在采用一致性哈希算法的分布式集群中将新的机器加入，其原理是通过使用与对象存储一样的Hash算法将机器也映射到环中（一般情况下对机器的hash计算是采用机器的IP或者机器唯一的别名作为输入值），然后以顺时针的方向计算，<strong>将所有对象存储到离自己最近的机器中</strong>。<br>假设现在有NODE1，NODE2，NODE3三台机器，通过Hash算法得到对应的KEY值，映射到环中，其示意图如下：<br><br>Hash(NODE1) = KEY1;<br><br>Hash(NODE2) = KEY2;<br><br>Hash(NODE3) = KEY3;<br><br><img src="/images/hash3.jpg"></p><p>通过上图可以看出对象与机器处于同一哈希空间中，这样按顺时针转动object1存储到了NODE1中，object3存储到了NODE2中，object2、object4存储到了NODE3中。在这样的部署环境中，hash环是不会变更的，因此，通过算出对象的hash值就能快速的定位到对应的机器中，这样就能找到对象真正的存储位置了。</p><h3 id="机器的删除与添加"><a href="#机器的删除与添加" class="headerlink" title="机器的删除与添加"></a>机器的删除与添加</h3><p>普通hash求余算法最为不妥的地方就是在有机器的添加或者删除之后会照成大量的对象存储位置失效，这样就大大的不满足单调性了。下面来分析一下一致性哈希算法是如何处理的。</p><h4 id="节点（机器）的删除"><a href="#节点（机器）的删除" class="headerlink" title="节点（机器）的删除"></a>节点（机器）的删除</h4><p>以上面的分布为例，如果NODE2出现故障被删除了，那么按照顺时针迁移的方法，object3将会被迁移到NODE3中，这样仅仅是object3的映射位置发生了变化，其它的对象没有任何的改动。如下图</p><p><img src="/images/hash4.jpg"></p><h4 id="节点（机器）的添加"><a href="#节点（机器）的添加" class="headerlink" title="节点（机器）的添加"></a>节点（机器）的添加</h4><p>如果往集群中添加一个新的节点NODE4，通过对应的哈希算法得到KEY4，并映射到环中，如下图<br><img src="/images/hash5.jpg"></p><p>通过按顺时针迁移的规则，那么object2被迁移到了NODE4中，其它对象还保持这原有的存储位置。通过对节点的添加和删除的分析，一致性哈希算法在保持了单调性的同时，还是数据的迁移达到了最小，这样的算法对分布式集群来说是非常合适的，避免了大量数据迁移，减小了服务器的的压力</p><h3 id="平衡性"><a href="#平衡性" class="headerlink" title="平衡性"></a>平衡性</h3><blockquote><p>根据上面的图解分析，一致性哈希算法满足了单调性和负载均衡的特性以及一般hash算法的分散性，但这还并不能当做其被广泛应用的原由，因为还缺少了平衡性。下面将分析一致性哈希算法是如何满足平衡性的</p></blockquote><p>hash算法是不保证平衡的，如上面只部署了NODE1和NODE3的情况（NODE2被删除的图），object1存储到了NODE1中，而object2、object3、object4都存储到了NODE3中，这样就照成了非常不平衡的状态。在一致性哈希算法中，为了尽可能的满足平衡性，其引入了虚拟节点</p><blockquote><p>“虚拟节点”（ virtual node ）是实际节点（机器）在 hash 空间的复制品（ replica ），一实际个节点（机器）对应了若干个“虚拟节点”，这个对应个数也成为“复制个数”，“虚拟节点”在 hash 空间中以hash值排列</p></blockquote><p>以上面只部署了NODE1和NODE3的情况（NODE2被删除的图）为例，之前的对象在机器上的分布很不均衡，现在我们以2个副本（复制个数）为例，这样整个hash环中就存在了4个虚拟节点，最后对象映射的关系图如下:</p><p><img src="/images/hash6.jpg"></p><p>根据上图可知对象的映射关系：object1-&gt;NODE1-1，object2-&gt;NODE1-2，object3-&gt;NODE3-2，object4-&gt;NODE3-1。通过虚拟节点的引入，对象的分布就比较均衡了。那么在实际操作中，正真的对象查询是如何工作的呢？对象从hash到虚拟节点到实际节点的转换如下图</p><p><img src="/images/hash7.jpg"></p><p>“虚拟节点”的hash计算可以采用对应节点的IP地址加数字后缀的方式。</p><p>例如假设NODE1的IP地址为192.168.1.100</p><p>引入“虚拟节点”前，计算 cache A 的 hash 值：Hash(“192.168.1.100”)</p><p>引入“虚拟节点”后，计算“虚拟节”点NODE1-1和NODE1-2的hash值：<br>Hash(“192.168.1.100#1”); // NODE1-1<br><br>Hash(“192.168.1.100#2”); // NODE1-2</p>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>一致性hash算法</title>
+    <url>/2021/02/20/%E4%B8%80%E8%87%B4%E6%80%A7hash%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<p>介绍一致性HASH算法原理及其应用场景</p>
+<a id="more"></a>
+
+<h3 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h3><p>一致性哈希算法在1997年由麻省理工学院提出的一种分布式哈希（DHT）实现算法，设计目标是为了解决因特网中的热点(Hot spot)问题，初衷和CARP十分类似。一致性哈希修正了CARP使用的简单哈希算法带来的问题，使得分布式哈希（DHT）可以在P2P环境中真正得到应用</p>
+<h3 id="一致性hash算法提出了在动态变化的Cache环境中，判定哈希算法好坏的四个定义"><a href="#一致性hash算法提出了在动态变化的Cache环境中，判定哈希算法好坏的四个定义" class="headerlink" title="一致性hash算法提出了在动态变化的Cache环境中，判定哈希算法好坏的四个定义"></a>一致性hash算法提出了在动态变化的Cache环境中，判定哈希算法好坏的四个定义</h3><ol>
+<li>平衡性(Balance)：平衡性是指哈希的结果能够尽可能分布到所有的缓冲中去，这样可以使得所有的缓冲空间都得到利用，很多哈希算法都能够满足这一条件</li>
+<li>单调性(Monotonicity)：单调性是指如果已经有一些内容通过哈希分派到了相应的缓冲中，又有新的缓冲加入到系统中，哈希的结果应能够保证原有已分配的内容可以被映射到原有的或者新的缓冲中去，而不会被映射到旧的缓冲集合中的其他缓冲区</li>
+<li>分散性(Spread)：在分布式环境中，终端有可能看不到所有的缓冲，而是只能看到其中的一部分。当终端希望通过哈希过程将内容映射到缓冲上时，由于不同终端所见的缓冲范围有可能不同，从而导致哈希的结果不一致，最终的结果是相同的内容被不同的终端映射到不同的缓冲区中。这种情况显然是应该避免的，因为它导致相同内容被存储到不同缓冲中去，降低了系统存储的效率。分散性的定义就是上述情况发生的严重程度。好的哈希算法应能够尽量避免不一致的情况发生，也就是尽量降低分散性</li>
+<li>负载(Load)：负载问题实际上是从另一个角度看待分散性问题。既然不同的终端可能将相同的内容映射到不同的缓冲区中，那么对于一个特定的缓冲区而言，也可能被不同的用户映射为不同 的内容。与分散性一样，这种情况也是应当避免的，因此好的哈希算法应能够尽量降低缓冲的负荷</li>
+</ol>
+<blockquote>
+<p>在分布式集群中，对机器的添加删除，或者机器故障后自动脱离集群这些操作是分布式集群管理最基本的功能。如果采用常用的hash(object)%N算法，那么在有机器添加或者删除后，很多原有的数据就无法找到了，这样严重的违反了单调性原则。</p>
+</blockquote>
+<p>接下来主要讲解一下一致性哈希算法是如何设计的</p>
+<h3 id="环形HASH空间"><a href="#环形HASH空间" class="headerlink" title="环形HASH空间"></a>环形HASH空间</h3><p>按照常用的hash算法来将对应的key哈希到一个具有2^32次方个桶的空间中，即0~(2^32)-1的数字空间中。现在我们可以将这些数字头尾相连，想象成一个闭合的环形。如下图把数据通过一定的hash算法处理后映射到环上</p>
+<p><img src="/images/hash1.jpg"></p>
+<p>现在我们将object1、object2、object3、object4四个对象通过特定的Hash函数计算出对应的key值，然后散列到Hash环上。如下图:<br><br>Hash(object1) = key1；<br><br>Hash(object2) = key2；<br><br>Hash(object3) = key3；<br><br>Hash(object4) = key4；<br><br><img src="/images/hash2.jpg"></p>
+<h3 id="将机器通过hash算法映射到环上"><a href="#将机器通过hash算法映射到环上" class="headerlink" title="将机器通过hash算法映射到环上"></a>将机器通过hash算法映射到环上</h3><p>在采用一致性哈希算法的分布式集群中将新的机器加入，其原理是通过使用与对象存储一样的Hash算法将机器也映射到环中（一般情况下对机器的hash计算是采用机器的IP或者机器唯一的别名作为输入值），然后以顺时针的方向计算，<strong>将所有对象存储到离自己最近的机器中</strong>。<br>假设现在有NODE1，NODE2，NODE3三台机器，通过Hash算法得到对应的KEY值，映射到环中，其示意图如下：<br><br>Hash(NODE1) = KEY1;<br><br>Hash(NODE2) = KEY2;<br><br>Hash(NODE3) = KEY3;<br><br><img src="/images/hash3.jpg"></p>
+<p>通过上图可以看出对象与机器处于同一哈希空间中，这样按顺时针转动object1存储到了NODE1中，object3存储到了NODE2中，object2、object4存储到了NODE3中。在这样的部署环境中，hash环是不会变更的，因此，通过算出对象的hash值就能快速的定位到对应的机器中，这样就能找到对象真正的存储位置了。</p>
+<h3 id="机器的删除与添加"><a href="#机器的删除与添加" class="headerlink" title="机器的删除与添加"></a>机器的删除与添加</h3><p>普通hash求余算法最为不妥的地方就是在有机器的添加或者删除之后会照成大量的对象存储位置失效，这样就大大的不满足单调性了。下面来分析一下一致性哈希算法是如何处理的。</p>
+<h4 id="节点（机器）的删除"><a href="#节点（机器）的删除" class="headerlink" title="节点（机器）的删除"></a>节点（机器）的删除</h4><p>以上面的分布为例，如果NODE2出现故障被删除了，那么按照顺时针迁移的方法，object3将会被迁移到NODE3中，这样仅仅是object3的映射位置发生了变化，其它的对象没有任何的改动。如下图</p>
+<p><img src="/images/hash4.jpg"></p>
+<h4 id="节点（机器）的添加"><a href="#节点（机器）的添加" class="headerlink" title="节点（机器）的添加"></a>节点（机器）的添加</h4><p>如果往集群中添加一个新的节点NODE4，通过对应的哈希算法得到KEY4，并映射到环中，如下图<br><img src="/images/hash5.jpg"></p>
+<p>通过按顺时针迁移的规则，那么object2被迁移到了NODE4中，其它对象还保持这原有的存储位置。通过对节点的添加和删除的分析，一致性哈希算法在保持了单调性的同时，还是数据的迁移达到了最小，这样的算法对分布式集群来说是非常合适的，避免了大量数据迁移，减小了服务器的的压力</p>
+<h3 id="平衡性"><a href="#平衡性" class="headerlink" title="平衡性"></a>平衡性</h3><blockquote>
+<p>根据上面的图解分析，一致性哈希算法满足了单调性和负载均衡的特性以及一般hash算法的分散性，但这还并不能当做其被广泛应用的原由，因为还缺少了平衡性。下面将分析一致性哈希算法是如何满足平衡性的</p>
+</blockquote>
+<p>hash算法是不保证平衡的，如上面只部署了NODE1和NODE3的情况（NODE2被删除的图），object1存储到了NODE1中，而object2、object3、object4都存储到了NODE3中，这样就照成了非常不平衡的状态。在一致性哈希算法中，为了尽可能的满足平衡性，其引入了虚拟节点</p>
+<blockquote>
+<p>“虚拟节点”（ virtual node ）是实际节点（机器）在 hash 空间的复制品（ replica ），一实际个节点（机器）对应了若干个“虚拟节点”，这个对应个数也成为“复制个数”，“虚拟节点”在 hash 空间中以hash值排列</p>
+</blockquote>
+<p>以上面只部署了NODE1和NODE3的情况（NODE2被删除的图）为例，之前的对象在机器上的分布很不均衡，现在我们以2个副本（复制个数）为例，这样整个hash环中就存在了4个虚拟节点，最后对象映射的关系图如下:</p>
+<p><img src="/images/hash6.jpg"></p>
+<p>根据上图可知对象的映射关系：object1-&gt;NODE1-1，object2-&gt;NODE1-2，object3-&gt;NODE3-2，object4-&gt;NODE3-1。通过虚拟节点的引入，对象的分布就比较均衡了。那么在实际操作中，正真的对象查询是如何工作的呢？对象从hash到虚拟节点到实际节点的转换如下图</p>
+<p><img src="/images/hash7.jpg"></p>
+<p>“虚拟节点”的hash计算可以采用对应节点的IP地址加数字后缀的方式。</p>
+<p>例如假设NODE1的IP地址为192.168.1.100</p>
+<p>引入“虚拟节点”前，计算 cache A 的 hash 值：Hash(“192.168.1.100”)</p>
+<p>引入“虚拟节点”后，计算“虚拟节”点NODE1-1和NODE1-2的hash值：<br>Hash(“192.168.1.100#1”); // NODE1-1<br><br>Hash(“192.168.1.100#2”); // NODE1-2</p>
+]]></content>
       <categories>
-          
-          <category> 一致性hash </category>
-          
+        <category>一致性hash</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>CPU/LOAD过高如何排查</title>
-      <link href="2021/02/20/CPU-LOAD%E8%BF%87%E9%AB%98%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5/"/>
-      <url>2021/02/20/CPU-LOAD%E8%BF%87%E9%AB%98%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5/</url>
-      
-        <content type="html"><![CDATA[<p>线上排查问题</p><a id="more"></a><h2 id="先通过TOP命令，找到CPU较高的进程，获取进程ID-PID"><a href="#先通过TOP命令，找到CPU较高的进程，获取进程ID-PID" class="headerlink" title="先通过TOP命令，找到CPU较高的进程，获取进程ID(PID)"></a>先通过TOP命令，找到CPU较高的进程，获取进程ID(PID)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top</span><br></pre></td></tr></table></figure><h2 id="切换到线程视图"><a href="#切换到线程视图" class="headerlink" title="切换到线程视图"></a>切换到线程视图</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -mp $&#123;pid&#125; -o THREAD,tid,time</span><br></pre></td></tr></table></figure><p>找到消耗CPU最多，最占CPU的线程,获取线程ID(TID)</p><h2 id="将TID转成16进制格式"><a href="#将TID转成16进制格式" class="headerlink" title="将TID转成16进制格式"></a>将TID转成16进制格式</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf <span class="string">&quot;%x\n&quot;</span> tid</span><br></pre></td></tr></table></figure><h2 id="通过jstack分析"><a href="#通过jstack分析" class="headerlink" title="通过jstack分析"></a>通过jstack分析</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack $&#123;pid&#125; |grep $&#123;tid&#125; -A 30</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>数据库数据结构</title>
+    <url>/2021/02/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<p>广义上的数据库常用的数据结构</p>
+<a id="more"></a>
+
+<h2 id="B树"><a href="#B树" class="headerlink" title="B树"></a>B树</h2><blockquote>
+<p>B树是对二叉树的一种扩展,允许每个节点有M-1个子节点<br>下图是一个M=4 阶的B树:<br><img src="/images/database1.jpg"></p>
+</blockquote>
+<h2 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h2><blockquote>
+<p>B+树是对B树的一种变形树，它与B树的差异在于:<br></p>
+</blockquote>
+<ol>
+<li>有k个子结点的结点必然有k个关键码<br></li>
+<li>非叶结点仅具有索引作用，跟记录有关的信息均存放在叶结点中<br></li>
+<li>树的所有叶结点构成一个有序链表，可以按照关键码排序的次序遍历全部记录<br></li>
+</ol>
+<p><img src="/images/database2.jpg"></p>
+<p>B+树能够高效的范围扫描功能，这得益于它的叶子节点相互连接并且主键有序，扫描时避免了耗时的遍历树的操作。这也是B+树被关系型数据库用作索引的原因之一</p>
+<h2 id="LSM数"><a href="#LSM数" class="headerlink" title="LSM数"></a>LSM数</h2><p>Log-structured merge-tree:HBase是基于LSM的数据结构</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://zhuanlan.zhihu.com/p/27700617">https://zhuanlan.zhihu.com/p/27700617</a><br><a href="https://www.cnblogs.com/vincently/p/4526560.html">https://www.cnblogs.com/vincently/p/4526560.html</a><br><a href="https://www.open-open.com/lib/view/open1424916275249.html">https://www.open-open.com/lib/view/open1424916275249.html</a></p>
+]]></content>
       <categories>
-          
-          <category> 线上问题排查 </category>
-          
+        <category>数据库</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hexo个性化配置</title>
-      <link href="2021/02/20/Hexo%E4%B8%80%E4%BA%9B%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE/"/>
-      <url>2021/02/20/Hexo%E4%B8%80%E4%BA%9B%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE/</url>
-      
-        <content type="html"><![CDATA[<p>Hexo个性优化</p><a id="more"></a><h2 id="【参考资料】"><a href="#【参考资料】" class="headerlink" title="【参考资料】"></a>【参考资料】</h2><ol><li><a href="https://victoryofymk.github.io/2018/10/23/Hexo%E4%B8%AA%E6%80%A7%E5%8C%96next%E4%B8%BB%E9%A2%98/">https://victoryofymk.github.io/2018/10/23/Hexo%E4%B8%AA%E6%80%A7%E5%8C%96next%E4%B8%BB%E9%A2%98/</a></li><li><a href="https://zhuanlan.zhihu.com/p/60424755">https://zhuanlan.zhihu.com/p/60424755</a></li></ol>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>2021读书计划</title>
+    <url>/2021/02/23/2021%E8%AF%BB%E4%B9%A6%E8%AE%A1%E5%88%92/</url>
+    <content><![CDATA[<ul>
+<li>3.5:一个月读完一本书</li>
+<li>3.75: 每本书读完写一篇读后感<a id="more"></a>
+
+</li>
+</ul>
+<h3 id="书单"><a href="#书单" class="headerlink" title="书单"></a>书单</h3><ol>
+<li>《乌合之众》</li>
+<li>《未来简史》</li>
+<li>《人类简史》</li>
+<li>《时间简史》</li>
+<li>《简读中国史》</li>
+<li></li>
+</ol>
+]]></content>
       <categories>
-          
-          <category> Hexo </category>
-          
+        <category>读书</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-  
-  
+  </entry>
 </search>
